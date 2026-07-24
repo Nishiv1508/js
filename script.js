@@ -89,3 +89,29 @@ if (mark.bmi > john.bmi) {
     `${john["fullName"]}'s BMI (${john.bmi}) is higher than ${mark.fullName}'s (${mark.bmi})`,
   );
 }
+
+//Challenge 6
+const calcTip = function (bill) {
+  return bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
+};
+
+/* Write your code below. Good luck! 🙂 */
+let bills = [22, 295, 176, 440, 37, 105, 10, 1100, 86, 52];
+let tips = [];
+let totals = [];
+
+for (let i in bills) {
+  tips.push(calcTip(bills[i]));
+  totals.push(bills[i] + tips[i]);
+}
+
+const calcAverage = (arr) => {
+  let sum = 0;
+  arr.map((i) => {
+    sum = sum + i;
+  });
+  return sum / arr.length;
+};
+
+let ans = calcAverage([1, 2, 3]);
+console.log(ans);
