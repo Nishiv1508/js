@@ -40,17 +40,17 @@ const calcAverage = (i, j, k) => {
   return (i + j + k) / 3;
 };
 
-let scoreDolphins = calcAverage(44, 23, 71);
-let scoreKoalas = calcAverage(65, 54, 49);
+let avgScoreDolphins = calcAverage(44, 23, 71);
+let avgScoreKoalas = calcAverage(65, 54, 49);
 
 function checkWinner(avgD, avgK) {
   if (avgD > 2 * avgK) {
-    console.log(`Dolphins win (${scoreDolphins} vs. ${scoreKoalas})`);
+    console.log(`Dolphins win (${avgScoreDolphins} vs. ${avgScoreKoalas})`);
   } else if (avgK > 2 * avgD) {
-    console.log(`Koalas win (${scoreKoalas} vs. ${scoreDolphins})`);
+    console.log(`Koalas win (${avgScoreKoalas} vs. ${avgScoreDolphins})`);
   } else {
     console.log("No team wins...");
   }
 }
 
-checkWinner(scoreDolphins, scoreKoalas);
+checkWinner(avgScoreDolphins, avgScoreKoalas);
