@@ -32,3 +32,25 @@ let tip = bill > 50 && bill < 300 ? (15 * bill) / 100 : (20 * bill) / 100;
 console.log(
   `The bill was ${bill}, the tip was ${tip}, and the total value ${bill + tip}`,
 );
+
+//challenge 4
+/* Write your code below. Good luck! 🙂 */
+
+const calcAverage = (i, j, k) => {
+  return (i + j + k) / 3;
+};
+
+let scoreDolphins = calcAverage(44, 23, 71);
+let scoreKoalas = calcAverage(65, 54, 49);
+
+function checkWinner(avgD, avgK) {
+  if (avgD > 2 * avgK) {
+    console.log(`Dolphins win (${scoreDolphins} vs. ${scoreKoalas})`);
+  } else if (avgK > 2 * avgD) {
+    console.log(`Koalas win (${scoreKoalas} vs. ${scoreDolphins})`);
+  } else {
+    console.log("No team wins...");
+  }
+}
+
+checkWinner(scoreDolphins, scoreKoalas);
