@@ -28,19 +28,11 @@ checkButton.addEventListener("click", () => {
       document.querySelector(".highscore").textContent = highScore;
     }
     document.querySelector("body").style.backgroundColor = "green";
-  } else if (guess > secretNumber) {
+  } else if (guess !== secretNumber) {
     if (score > 1) {
-      document.querySelector(".message").textContent = "Too high";
-      score--;
-      highScore--;
-      document.querySelector(".score").textContent = score;
-    } else {
-      document.querySelector(".message").textContent = "Gameover";
-      document.querySelector(".score").textContent = 0;
-    }
-  } else if (guess < secretNumber) {
-    if (score > 1) {
-      document.querySelector(".message").textContent = "Too low";
+      guess > secretNumber
+        ? (document.querySelector(".message").textContent = "Too high")
+        : (document.querySelector(".message").textContent = "Too Low");
       score--;
       highScore--;
       document.querySelector(".score").textContent = score;
