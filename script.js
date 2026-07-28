@@ -142,3 +142,16 @@ const add = (...numbers) => {
 console.log(add(1, 2, 3));
 const numArray = [2, 3];
 console.log(add(...numArray));
+
+//?, ||, &&, ??  (Sort-circuiting)
+const eg1 = 0 || 5;
+const egg = 0 || undefined;
+const eg2 = null && 5;
+const eg3 = undefined ?? 5;
+console.log(eg1, egg, eg2, eg3);
+const obj1 = {
+  name: "Js",
+  devTime: 10,
+};
+console.log(obj1?.age ?? "No data available");
+console.log(obj1?.name ?? "No data available");
