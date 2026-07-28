@@ -115,3 +115,18 @@ const calcAverage = (arr) => {
 
 let ans = calcAverage([1, 2, 3]);
 console.log(ans);
+
+// Destructuring and spread operator
+const arr = [1, 2, 3];
+const arr1 = [...arr, 4, 5];
+console.log(arr1);
+const [i, j, ...rest] = arr1;
+console.log(i, j, rest);
+
+const obj = {
+  status: 201,
+  msg: "Created",
+};
+const { status, msg } = { ...obj };
+console.log(status);
+console.log(msg);
