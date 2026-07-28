@@ -130,3 +130,15 @@ const obj = {
 const { status, msg } = { ...obj };
 console.log(status);
 console.log(msg);
+
+const add = (...numbers) => {
+  let sum = 0;
+  for (let i of numbers) {
+    sum = sum + i;
+  }
+  return sum;
+};
+
+console.log(add(1, 2, 3));
+const numArray = [2, 3];
+console.log(add(...numArray));
