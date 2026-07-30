@@ -204,3 +204,46 @@ console.log("Difference mexican: ", uniqueMexicanFoods);
 const uniqueItalianAndMexicanFoods =
   italianFoods.symmetricDifference(mexicanFoods);
 console.log(uniqueItalianAndMexicanFoods);
+
+//Maps
+const rest = new Map();
+rest.set("name", "Classico Italiano");
+rest.set(1, "Firenze, Italy");
+console.log(rest.set(2, "Lisbon, Portugul"));
+rest
+  .set("categories", ["Italian", "Pizzeria", "Vegetarian", "Organic"])
+  .set("open", 11)
+  .set("close", 23)
+  .set(true, "We are open")
+  .set(false, "We are closed");
+
+console.log(rest.get("name"));
+console.log(rest.get(true));
+
+const time = 21;
+console.log(rest.get(time > rest.get("open") && time < rest.get("close")));
+
+console.log(rest.has("categories"));
+rest.delete(2);
+console.log(rest);
+console.log(rest.size);
+rest.clear();
+console.log(rest);
+
+const question = new Map([
+  ["question", "what is the best programming language in the world"],
+  [1, "C"],
+  [2, "Java"],
+  [3, "Javascript"],
+  ["correcr", 3],
+  [true, "Correct"],
+  [false, "Try again"],
+]);
+console.log(question);
+
+//Looping through map
+for (const [key, value] of question) {
+  if (typeof key === "number") {
+    console.log(`Answer ${key}: ${value}`);
+  }
+}
