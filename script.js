@@ -155,3 +155,17 @@ const obj1 = {
 };
 console.log(obj1?.age ?? "No data available");
 console.log(obj1?.name ?? "No data available");
+
+//set
+const set1 = new Set(["Pizza", "Risotto", "Pasta", "Pizza"]);
+console.log(set1);
+console.log(set1.has("Pizza"));
+console.log(set1.has("Kachori"));
+set1.add("Garlic Bread");
+set1.delete("Risotto");
+for (let i of set1) {
+  console.log(i);
+}
+
+set1.clear();
+console.log(set1);
