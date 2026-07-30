@@ -247,3 +247,69 @@ for (const [key, value] of question) {
     console.log(`Answer ${key}: ${value}`);
   }
 }
+
+//Strings
+const airline = "TAP Air Protugul";
+const plane = "Airbus A320neo";
+console.log(plane[0], plane[1], "Halaa"[3]);
+console.log(airline.indexOf("r"), airline.lastIndexOf("r"));
+console.log(airline.slice(4));
+console.log(airline.slice(4, 7));
+console.log(airline.slice(4, airline.indexOf(" ")));
+console.log(airline.slice(airline.lastIndexOf(" ") + 1));
+console.log(airline.slice(-2));
+console.log(airline.slice(1, -1));
+const checkMiddleSeat = function (seat) {
+  const s = seat.slice(-1);
+  if (s === "B" || s === "E") {
+    console.log("Middle seat");
+  } else {
+    console.log("You got lucky seat");
+  }
+};
+checkMiddleSeat("11B");
+checkMiddleSeat("23C");
+checkMiddleSeat("3E");
+
+const passenger = "Nishiv";
+const passengerLower = passenger.toLowerCase();
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+const email = "hello@gmail.com";
+const loginEmail = "    Hello@gmail.com";
+// const lowerEmail = loginEmail.toLowerCase();
+// const trimmedEmail = lowerEmail.trim();
+// console.log(trimmedEmail);
+
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(normalizedEmail);
+
+const priceGB = "288,97E";
+const priceUS = priceGB.replace("E", "$").replace(",", ".");
+console.log(priceUS);
+
+const announcement =
+  "All passengers come to boarding door 23, Boarding door 23!";
+console.log(announcement.replace("door", "gate"));
+console.log(announcement.replaceAll("door", "gate"));
+
+console.log(plane.includes("A320"));
+console.log(plane.includes("Boeing"));
+console.log(plane.startsWith("Airb"));
+
+if (plane.startsWith("Airbus") && plane.endsWith("neo")) {
+  console.log("Part of the New Airbus family");
+}
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();
+  if (baggage.includes("Knife") || baggage.includes("gun")) {
+    console.log("You are not allowed to board");
+  } else {
+    console.log("Welcome aboard");
+  }
+};
+checkBaggage("I have a laptop, some foof and a pocket knife");
+checkBaggage("Socks and camera");
+checkBaggage("Got some snacks and a gun for protection");
