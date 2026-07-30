@@ -169,3 +169,38 @@ for (let i of set1) {
 
 set1.clear();
 console.log(set1);
+
+const italianFoods = new Set([
+  "pasta",
+  "gnocchi",
+  "tomatoes",
+  "olive oil",
+  "garlic",
+  "basil",
+]);
+const mexicanFoods = new Set([
+  "tortillas",
+  "beans",
+  "rice",
+  "tomatoes",
+  "avocado",
+  "garlic",
+]);
+const commonFoods = italianFoods.intersection(mexicanFoods);
+console.log(commonFoods);
+console.log([...commonFoods]); //set coverted to array
+
+const italianMexicanFusion = italianFoods.union(mexicanFoods);
+console.log("Union", italianMexicanFusion);
+
+console.log([...new Set([...italianFoods, ...mexicanFoods])]);
+
+const uniqueItalianFoods = italianFoods.difference(mexicanFoods);
+console.log("Difference: ", uniqueItalianFoods);
+
+const uniqueMexicanFoods = mexicanFoods.difference(italianFoods);
+console.log("Difference mexican: ", uniqueMexicanFoods);
+
+const uniqueItalianAndMexicanFoods =
+  italianFoods.symmetricDifference(mexicanFoods);
+console.log(uniqueItalianAndMexicanFoods);
