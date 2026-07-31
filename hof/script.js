@@ -15,3 +15,13 @@ const transformer = (str, fn) => {
 
 transformer("Javascript is the best!", upperFirstWord);
 transformer("Javascript is the best!", oneWord);
+
+//closure
+const greet = (greeting) => {
+  return (name) => {
+    console.log(`${greeting} ${name}`);
+  };
+};
+const greeterHey = greet("Hey");
+greeterHey("Alpha");
+greet("Hey")("Beta");
