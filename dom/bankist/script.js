@@ -7,6 +7,13 @@ const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const btnCloseModal = document.querySelector(".btn--close-modal");
 const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
+const header = document.querySelector(".header");
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
+const tabs = document.querySelectorAll(".operations__tab");
+const tabsContainer = document.querySelector(".operations__tab-container");
+const tabsContent = document.querySelectorAll(".operations__content");
+const nav = document.querySelector(".nav");
 
 const openModal = function (e) {
   e.preventDefault();
@@ -30,18 +37,7 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
-console.log(document.documentElement);
-console.log(document.head);
-console.log(document.body);
-const header = document.querySelector(".header");
-const allSections = document.querySelectorAll(".section");
-console.log(allSections);
-document.getElementById("section--1");
-const allButtons = document.getElementsByTagName("button");
-console.log(allButtons);
-console.log(document.getElementsByClassName("btn"));
-
-//creating element
+//cookie
 const message = document.createElement("div");
 message.classList.add("cookie-message");
 // message.textContent =
@@ -58,40 +54,12 @@ document
   .addEventListener("click", function () {
     message.remove();
   });
-
-//styles
 message.style.backgroundColor = "#37383d";
 message.style.width = "120%";
 message.style.height =
   Number.parseFloat(getComputedStyle(message).height, 10) + 30 + "px";
 
-// document.documentElement.style.setProperty("--color-primary", "orangered");
-
-// //attributes
-// const logo = document.querySelector(".nav__logo");
-// console.log(logo.alt);
-// console.log(logo.src);
-
-// logo.alt = "Beautiful Minimalistic Logo";
-// console.log(logo.getAttribute("designer"));
-// logo.setAttribute("company", "Bankist");
-
-// const link = document.querySelector(".twitter-link");
-// console.log(link.href);
-// console.log(link.getAttribute("href"));
-
-// //data attributes
-// console.log(logo.dataset.versionNumber);
-
-// //classes
-// logo.classList.add("c");
-// logo.classList.remove("c");
-// logo.classList.toggle("c");
-// logo.classList.contains("c");
-
-const btnScrollTo = document.querySelector(".btn--scroll-to");
-const section1 = document.querySelector("#section--1");
-
+//scrolling
 btnScrollTo.addEventListener("click", (e) => {
   const s1coords = section1.getBoundingClientRect();
   console.log(s1coords);
@@ -102,8 +70,6 @@ btnScrollTo.addEventListener("click", (e) => {
     document.documentElement.clientHeight,
     document.documentElement.clientWidth,
   );
-
-  //scrolling
   // window.scrollTo(
   //   s1coords.left + window.pageXOffset,
   //   s1coords.top + window.pageYOffset,
@@ -118,3 +84,224 @@ btnScrollTo.addEventListener("click", (e) => {
   //modern way
   section1.scrollIntoView({ behavior: "smooth" });
 });
+
+//Page navigation
+// document.querySelectorAll(".nav__link").forEach((el) => {
+//   el.addEventListener("click", (e) => {
+//     e.preventDefault();
+//     const id = e.target.getAttribute("href");
+//     console.log(id);
+//     document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+//   });
+// });
+
+document.querySelector(".nav__links").addEventListener("click", (e) => {
+  //This is called event delegation
+  e.preventDefault();
+  const id = e.target.getAttribute("href");
+  console.log(id);
+  document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+});
+
+//Tabbed Component
+
+tabsContainer.addEventListener("click", (e) => {
+  e.preventDefault();
+  const clicked = e.target.closest(".operations__tab");
+  if (!clicked) return;
+
+  tabs.forEach((t) => t.classList.remove("operations__tab--active"));
+  tabsContent.forEach((c) => c.classList.remove("operations__content--active"));
+
+  clicked.classList.add("operations__tab--active");
+
+  //Activate content area
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add("operations__content--active");
+});
+
+//Menu Fade Animation
+const handleHover = function (e) {
+  if (e.target.classList.contains("nav__link")) {
+    const link = e.target;
+    const siblings = link.closest(".nav").querySelectorAll(".nav__link");
+    const logo = link.closest(".nav").querySelector("img");
+    siblings.forEach((el) => {
+      if (el !== link) el.style.opacity = this;
+    });
+    logo.style.opacity = this;
+  }
+};
+
+nav.addEventListener("mouseover", handleHover.bind(0.5));
+
+nav.addEventListener("mouseout", handleHover.bind(1));
+
+//Reveal Sections
+const allSections = document.querySelectorAll(".section");
+
+const revealSection = function (entries, observer) {
+  console.log(entries);
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+
+    entry.target.classList.remove("section--hidden");
+    observer.unobserve(entry.target);
+  });
+};
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add("section--hidden");
+});
+
+//Lazy Loading Images
+const imgTargets = document.querySelectorAll("img[data-src]");
+
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+
+  entry.target.src = entry.target.dataset.src;
+  entry.target.addEventListener("load", () => {
+    entry.target.classList.remove("lazy-img");
+  });
+
+  observer.unobserve(entry);
+};
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: "200px",
+});
+
+imgTargets.forEach((img) => imgObserver.observe(img));
+
+/////////////////////////////////////////////////////
+// console.log(document.documentElement);
+// console.log(document.head);
+// console.log(document.body);
+// const header = document.querySelector(".header");
+// const allSections = document.querySelectorAll(".section");
+// console.log(allSections);
+// document.getElementById("section--1");
+// const allButtons = document.getElementsByTagName("button");
+// console.log(allButtons);
+// console.log(document.getElementsByClassName("btn"));
+
+// //creating element
+// const message = document.createElement("div");
+// message.classList.add("cookie-message");
+// // message.textContent =
+// //   "We use cookies for improved functionality and analytics.";
+// message.innerHTML =
+//   "We use cookies for improved functionality and analytics. <button class='btn btn--close-cookie'>Got it!</button>";
+// header.append(message);
+// // header.before(message);
+// // header.after(message);
+
+// //delete element
+// document
+//   .querySelector(".btn--close-cookie")
+//   .addEventListener("click", function () {
+//     message.remove();
+//   });
+
+// //styles
+// message.style.backgroundColor = "#37383d";
+// message.style.width = "120%";
+// message.style.height =
+//   Number.parseFloat(getComputedStyle(message).height, 10) + 30 + "px";
+
+// // document.documentElement.style.setProperty("--color-primary", "orangered");
+
+// // //attributes
+// // const logo = document.querySelector(".nav__logo");
+// // console.log(logo.alt);
+// // console.log(logo.src);
+
+// // logo.alt = "Beautiful Minimalistic Logo";
+// // console.log(logo.getAttribute("designer"));
+// // logo.setAttribute("company", "Bankist");
+
+// // const link = document.querySelector(".twitter-link");
+// // console.log(link.href);
+// // console.log(link.getAttribute("href"));
+
+// // //data attributes
+// // console.log(logo.dataset.versionNumber);
+
+// // //classes
+// // logo.classList.add("c");
+// // logo.classList.remove("c");
+// // logo.classList.toggle("c");
+// // logo.classList.contains("c");
+
+// const btnScrollTo = document.querySelector(".btn--scroll-to");
+// const section1 = document.querySelector("#section--1");
+
+// btnScrollTo.addEventListener("click", (e) => {
+//   const s1coords = section1.getBoundingClientRect();
+//   console.log(s1coords);
+//   console.log(e.target.getBoundingClientRect());
+//   console.log("current scroll (X/Y)", window.scrollX, scrollY);
+//   console.log(
+//     "height/width viewport",
+//     document.documentElement.clientHeight,
+//     document.documentElement.clientWidth,
+//   );
+
+//   //scrolling
+//   // window.scrollTo(
+//   //   s1coords.left + window.pageXOffset,
+//   //   s1coords.top + window.pageYOffset,
+//   // );
+
+//   // window.scrollTo({
+//   //   left: s1coords.left + window.pageXOffset,
+//   //   top: s1coords.top + window.pageYOffset,
+//   //   behavior: "smooth",
+//   // });
+
+//   //modern way
+//   section1.scrollIntoView({ behavior: "smooth" });
+// });
+
+// const randomInt = (min, max) => {
+//   return Math.floor(Math.random() * (max - min + 1) + min);
+// };
+// const randomColor = () => {
+//   return `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
+// };
+
+// document.querySelector(".nav__links").addEventListener("click", function (e) {
+//   e.preventDefault();
+//   e.target.style.backgroundColor = randomColor();
+
+//   //e.stopPropogaion()
+// });
+
+// // Dom traversing
+// //Going down
+// const h1 = document.querySelector("h1");
+// console.log(h1.querySelector(".highlight"));
+// console.log(h1.children);
+// console.log(h1.childNodes);
+// h1.firstElementChild.style.color = "white";
+// h1.lastElementChild.style.color = "orangered";
+
+// //Going up
+// console.log(h1.parentNode);
+// console.log(h1.parentElement);
+// h1.closest(".header").style.background = "var(--gradient-secondary)";
+
+// //Getting siblings
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
