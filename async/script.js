@@ -163,32 +163,38 @@ const img1 = document.createElement("img");
 const a1 = document.createElement("a");
 
 btn.addEventListener("click", async (e) => {
+  e.preventDefault();
   const url = GITHUB_API + document.querySelector(".username").value;
 
   const userData = await fetch(url);
-  const userParsedData = await userData.json();
-  console.log(userParsedData);
-  const repo = await fetch(userParsedData.repos_url);
-  const repoData = await repo.json();
-  let str = "";
-  let i = 1;
-  for (let key in repoData) {
-    str = str + `${i} : ${repoData[key].name}\n`;
-    i++;
+  if (!userData.ok) {
+    para1.textContent = "User not found :(";
+    container.append(para1);
+    throw new Error("Wrong Details");
+  } else {
+    const userParsedData = await userData.json();
+    const repo = await fetch(userParsedData.repos_url);
+    const repoData = await repo.json();
+    let str = "";
+    let i = 1;
+    for (let key in repoData) {
+      str = str + `${i} : ${repoData[key].name}\n`;
+      i++;
+    }
+
+    para1.textContent = `Bio: ${userParsedData.bio == null ? "Data Not Available" : userParsedData.bio}`;
+    para2.textContent = `Followers: ${userParsedData.followers == null ? "Data Not Available" : userParsedData.followers}`;
+    para3.textContent = `Location: ${userParsedData.location == null ? "Data Not Available" : userParsedData.location}`;
+    img1.setAttribute("src", `${userParsedData.avatar_url}`);
+    a1.setAttribute("href", `${userParsedData.html_url}`);
+    a1.textContent = `Go to ${userParsedData.login}`;
+    para4.textContent = "Repos: \n" + str;
+
+    container.append(para1);
+    container.append(para2);
+    container.append(para3);
+    container.append(img1);
+    container.append(para4);
+    container.append(a1);
   }
-
-  para1.textContent = `Bio: ${userParsedData.bio == null ? "Data Not Available" : userParsedData.bio}`;
-  para2.textContent = `Followers: ${userParsedData.followers == null ? "Data Not Available" : userParsedData.followers}`;
-  para3.textContent = `Location: ${userParsedData.location == null ? "Data Not Available" : userParsedData.location}`;
-  img1.setAttribute("src", `${userParsedData.avatar_url}`);
-  a1.setAttribute("href", `${userParsedData.html_url}`);
-  a1.textContent = `Go to ${userParsedData.login}`;
-  para4.textContent = "Repos: \n" + str;
-
-  container.append(para1);
-  container.append(para2);
-  container.append(para3);
-  container.append(img1);
-  container.append(para4);
-  container.append(a1);
 });
